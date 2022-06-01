@@ -1,134 +1,134 @@
-site,temp,prec,forestcover100,alt,realms
-ACF_High,20.3,1311,6.5,45,Nearctic
-ACF_Mod,20.3,1311,6.5,45,Nearctic
-AliceSprings,22.4,320,0,600,Australian
-Ars,5,1190,1.5,1836,Palearctic
-BCI,26.5,2549,96.72727272727272,57,Panamanian
-Boucle Vitex,25.6,3102,90,33,Afrotropical
-Boyagin,16,496,19.96,368,Australian
-BP,9.5,1119,90,471,Australian
-BRUGAROLO,8,1137,13.655172413793103,929,Palearctic
-bsb.cl,20.7,1650,0.2558139534883721,1126,Neotropical
-bsb.ds,20.7,1595,35.285714285714285,1122,Neotropical
-bsb.ss,20.7,1650,9.38095238095238,1126,Neotropical
-Calperum,17.1,256,1.3333333333333333,52,Australian
-CapeTribulation,23.6,1980,97.95348837209302,384,Australian
-Casita,17.4,2323,90.41463414634148,1695,Panamanian
-CCW,8.8,912,0,226,Nearctic
-Ceiba_dry,26.3,1529,80.91111111111111,5,Neotropical
-Cerrado Grassland,18.7,1602,4.318181818181818,1088,Neotropical
-ChorroA,20.5,3053,94.97560975609755,1167,Panamanian
-CKYWR_1,12.6,1283,100,345,Nearctic
-CKYWR_2,12.7,1296,100,348,Nearctic
-CocoaF1,25.7,1396,78.8048780487805,154,Afrotropical
-CocoaF2,25.7,1396,78.8048780487805,154,Afrotropical
-CocoaF4,25.7,1396,78.8048780487805,154,Afrotropical
-CocoaF7,25.7,1396,78.8048780487805,154,Afrotropical
-CocoaF8,25.7,1396,78.8048780487805,154,Afrotropical
-CocoaF9,25.7,1396,78.8048780487805,154,Afrotropical
-Copete,11.4,2597,89.85365853658537,2711,Panamanian
-Coweeta,10,1970,95.10416666666669,1260,Nearctic
-CumberlandPlain,17.2,894,60.361702127659576,22,Australian
-Deciduous,4.6,967,90,974,Neotropical
-Deering,23.9,1400,62.5,8,Nearctic
-El_verde,21.3,2958,83.04651162790698,606,Panamanian
-Encenillo_Plot 3,10.4,1271,75.66666666666667,3134,Neotropical
-Encenillo_Plot 4,10.4,1271,77.2439024390244,3134,Neotropical
-Encenillo_Plot 5,10.4,1271,82.90243902439025,3134,Neotropical
-Encenillo_Plot 6,10.4,1271,69.7560975609756,3134,Neotropical
-EntreRios,17.9,1048,6.680851063829787,21,Neotropical
-Eucalyptus_plantation,25.8,2832,97.9318181818182,47,Neotropical
-Everglades,23.6,1475,84.5,5,Nearctic
-Evergreen,4.6,967,90,974,Neotropical
-FORD,25.7,1860,69.95555555555555,6,Panamanian
-ForestF3,25.7,1396,78.8048780487805,154,Afrotropical
-ForestF5,25.7,1396,78.8048780487805,154,Afrotropical
-ForestF6,25.7,1396,78.8048780487805,154,Afrotropical
-Garraf220Control,15.5,630,0.3584905660377358,231,Palearctic
-Garraf220Drought,15.5,630,0.3584905660377358,231,Palearctic
-GER_Auwald,9,512,82.84848484848484,110,Palearctic
-GER_FRANKONIA,8.9,684,40.58064516129032,334,Palearctic
-GER_Hainich,7.1,734,85.23809523809524,451,Palearctic
-GER_ODENWALD,8.8,758,55.39344262295082,361,Palearctic
-Gingin,18.4,701,1.9782608695652169,56,Australian
-GreatWesternWoodlands,18.6,273,0,455,Australian
-Guatavita_Plot 1,12.6,974,17.951219512195124,2821,Neotropical
-Guatavita_Plot 2,12.6,974,25.658536585365855,2821,Neotropical
-HH,9.1,786,89.47692307692307,-3,Palearctic
-Hitchiti,17.4,1206,89.29166666666667,136,Nearctic
-HondaB,19.5,2705,95.14634146341464,1337,Panamanian
-HP,14.7,1323,28.729166666666668,100,Australian
-ISPRA,11.4,1159,74.35087719298245,237,Palearctic
-iti.cl,19.8,1367,0,728,Neotropical
-iti.ds,19.7,1367,47.77272727272727,750,Neotropical
-iti.ss,19.8,1367,0.18604651162790695,728,Neotropical
-Key Largo,24.3,1325,91.1063829787234,8,Nearctic
-Las Verbenas,12.4,553,0.10416666666666669,1601,Neotropical
-Litchfield,26.4,1425,16,220,Australian
-Llanitos_Plot 21,14.6,1542,90,2510,Neotropical
-Llanitos_Plot 22,14.6,1542,90,2510,Neotropical
-Maliau,25.6,2533,97.95121951219512,298,Oriental
-Mata de galeria,18.7,1602,55.8,1088,Neotropical
-MELIQUINA(PP),7.7,828,31.127272727272725,1075,Neotropical
-Meliquina(VN),7.7,828,6.035714285714286,1075,Neotropical
-Meranges1800Control,6,1130,73.72727272727273,1718,Palearctic
-Meranges2150Control,6,1130,88.64814814814815,1718,Palearctic
-Meranges2500Control,1.8,1406,0,2449,Palearctic
-Mirador,17.4,2323,90.26190476190476,1695,Panamanian
-Montseny1200Control,9.8,949,89.18518518518519,1211,Palearctic
-Montseny1600Control,9.8,949,11.849056603773583,1211,Palearctic
-Montseny800Control,11.3,871,90.3148148148148,923,Palearctic
-Nwanedi,22.5,588,0.17777777777777778,550,Afrotropical
-Ogawa,9.9,1582,30.8125,641,Sino-Japanese
-Ombrophilous Atlantic Forest,15.1,1827,93.44186046511628,1529,Neotropical
-OT,14.5,1265,89.27083333333333,121,Australian
-PaloSeco,21.6,3338,85.36585365853658,975,Panamanian
-PAMPACHI(PP),9.3,538,25.96551724137931,857,Neotropical
-PAMPACHI(VN),9.3,538,1.2307692307692308,857,Neotropical
-PE_Colorado,22.1,2950,80.3409090909091,481,Panamanian
-PE-PALM,21.1,3001,87.83720930232558,645,Panamanian
-Pinola,18.9,2627,95.48780487804878,1439,Panamanian
-Pinus caribea plantation,25.8,2832,98.92682926829268,47,Neotropical
-PO_CLOUD,21.1,3001,88.11627906976744,645,Panamanian
-Poblet,12.1,685,26.23636363636364,778,Palearctic
-Prades950Control,12.1,676,83.82142857142857,769,Palearctic
-Prades950Drought,12.1,676,83.82142857142857,769,Palearctic
-Quetzal,11.4,2597,89.60975609756098,2711,Panamanian
-RobsonCreek,20.9,2149,97.8095238095238,718,Australian
-Sadayama,17.1,2410,95.4375,113,Sino-Japanese
-Samford,19.6,1272,42.08695652173913,130,Australian
-San Bernardo,17.4,491,0,473,Neotropical
-SanJavier,16.1,617,10.808510638297872,896,Neotropical
-Satara_Burnt & grazed,22.4,563,6.888888888888889,245,Afrotropical
-Satara_Unburnt,22.4,563,6.888888888888889,245,Afrotropical
-SavRivSite,17.4,1173,100,69,Nearctic
-sdc.cl,19.4,1501,0,1017,Neotropical
-sdc.ss,19.4,1501,3.5681818181818183,1017,Neotropical
-Tabio_Plot 10,12.7,893,90.92307692307692,2763,Panamanian
-Tabio_Plot 7,12.7,893,88.60975609756098,2763,Panamanian
-Tabio_Plot 8,12.7,893,86.34146341463415,2763,Panamanian
-Tabio_Plot 9,12.7,893,91.63414634146342,2763,Panamanian
-Teshio,6.2,1223,33.2,37,Sino-Japanese
-Torca_Plot 11,12.3,943,89.8048780487805,2825,Panamanian
-Torca_Plot 12,12.3,943,89.38095238095238,2825,Panamanian
-Torca_Plot 13,12.3,943,63.58536585365854,2825,Panamanian
-Torca_Plot 14,12.3,943,90.07317073170732,2825,Panamanian
-Tower_North_Carolina,16.1,1281,1.1458333333333333,6,Nearctic
-Tucuman,19,892,95.47727272727272,695,Neotropical
-Tuixent,6.3,1094,80.03703703703704,1678,Palearctic
-Tumbarumba,9.1,1476,82.88,1227,Australian
-Veluwe,9,802,96.35384615384616,42,Palearctic
-VT2,4.7,1126,99.51724137931036,496,Nearctic
-VT3,4.7,1126,99.84210526315788,496,Nearctic
-VT6,4.7,1126,98.76363636363637,496,Nearctic
-VT7,4.7,1126,97.6140350877193,496,Nearctic
-Warra,10.5,1453,88.64285714285714,242,Australian
-White Sand Forest,25.8,2818,99.38095238095238,37,Neotropical
-Wits Rural Facility,21,735,15.833333333333334,590,Afrotropical
-Wombat,10.9,1060,85.52941176470588,699,Australian
-Wright State University,11.2,977,95.1923076923077,292,Nearctic
-Yona,20.9,2306,95.41666666666669,283,Oriental
-YUCO(PP),8.4,1234,92.67307692307692,907,Neotropical
-YUCO(VN),7.9,1145,90.32692307692308,1006,Neotropical
-Zarceadero,22.1,3371,95.5609756097561,902,Panamanian
-Zofin,5.4,979,81.88709677419355,891,Palearctic
+site,temp,prec,aridity,forestcover100,alt,realms,biome
+ACF_High,20.3,1311,8087,6.5,45,Nearctic,Tropical seasonal forest/savanna
+ACF_Mod,20.3,1311,8087,6.5,45,Nearctic,Tropical seasonal forest/savanna
+AliceSprings,22.4,320,1224,0,600,Australian,Subtropical desert
+Ars,5,1190,10160,1.5,1836,Palearctic,Temperate seasonal forest
+BCI,26.5,2549,13158,96.72727272727272,57,Panamanian,Tropical seasonal forest/savanna
+Boucle Vitex,25.6,3102,23919,90,33,Afrotropical,Tropical rain forest
+Boyagin,16,496,2347,19.96,368,Australian,Woodland/shrubland
+BP,9.5,1119,10214,90,471,Australian,Temperate seasonal forest
+BRUGAROLO,8,1137,10056,13.655172413793103,929,Palearctic,Temperate seasonal forest
+bsb.cl,20.7,1650,9925,0.2558139534883721,1126,Neotropical,Tropical seasonal forest/savanna
+bsb.ds,20.7,1595,9956,35.285714285714285,1122,Neotropical,Tropical seasonal forest/savanna
+bsb.ss,20.7,1650,9918,9.38095238095238,1126,Neotropical,Tropical seasonal forest/savanna
+Calperum,17.1,256,1248,1.3333333333333333,52,Australian,Subtropical desert
+CapeTribulation,23.6,1980,20323,97.95348837209302,384,Australian,Tropical seasonal forest/savanna
+Casita,17.4,2323,24293,90.41463414634148,1695,Panamanian,Temperate rain forest
+CCW,8.8,912,8197,0,226,Nearctic,Temperate seasonal forest
+Ceiba_dry,26.3,1529,7329,80.91111111111111,5,Neotropical,Tropical seasonal forest/savanna
+Cerrado Grassland,18.7,1602,11884,4.318181818181818,1088,Neotropical,Temperate seasonal forest
+ChorroA,20.5,3053,26524,94.97560975609755,1167,Panamanian,Tropical rain forest
+CKYWR_1,12.6,1283,10066,100,345,Nearctic,Temperate seasonal forest
+CKYWR_2,12.7,1296,10060,100,348,Nearctic,Temperate seasonal forest
+CocoaF1,25.7,1396,10350,78.8048780487805,154,Afrotropical,Tropical seasonal forest/savanna
+CocoaF2,25.7,1396,10350,78.8048780487805,154,Afrotropical,Tropical seasonal forest/savanna
+CocoaF4,25.7,1396,10350,78.8048780487805,154,Afrotropical,Tropical seasonal forest/savanna
+CocoaF7,25.7,1396,10350,78.8048780487805,154,Afrotropical,Tropical seasonal forest/savanna
+CocoaF8,25.7,1396,10350,78.8048780487805,154,Afrotropical,Tropical seasonal forest/savanna
+CocoaF9,25.7,1396,10350,78.8048780487805,154,Afrotropical,Tropical seasonal forest/savanna
+Copete,11.4,2597,26225,89.85365853658537,2711,Panamanian,Temperate rain forest
+Coweeta,10,1970,15741,95.10416666666669,1260,Nearctic,Temperate seasonal forest
+CumberlandPlain,17.2,894,5240,60.361702127659576,22,Australian,Woodland/shrubland
+Deciduous,4.6,967,11664,90,974,Neotropical,Temperate seasonal forest
+Deering,23.9,1400,7725,62.5,8,Nearctic,Tropical seasonal forest/savanna
+El_verde,21.3,2958,12623,83.04651162790698,606,Panamanian,Tropical rain forest
+Encenillo_Plot 3,10.4,1271,16324,75.66666666666667,3134,Neotropical,Temperate seasonal forest
+Encenillo_Plot 4,10.4,1271,15480,77.2439024390244,3134,Neotropical,Temperate seasonal forest
+Encenillo_Plot 5,10.4,1271,16324,82.90243902439025,3134,Neotropical,Temperate seasonal forest
+Encenillo_Plot 6,10.4,1271,15480,69.7560975609756,3134,Neotropical,Temperate seasonal forest
+EntreRios,17.9,1048,6709,6.680851063829787,21,Neotropical,Woodland/shrubland
+Eucalyptus_plantation,25.8,2832,18179,97.9318181818182,47,Neotropical,Tropical rain forest
+Everglades,23.6,1475,7742,84.5,5,Nearctic,Tropical seasonal forest/savanna
+Evergreen,4.6,967,11478,90,974,Neotropical,Temperate seasonal forest
+FORD,25.7,1860,8609,69.95555555555555,6,Panamanian,Tropical seasonal forest/savanna
+ForestF3,25.7,1396,10350,78.8048780487805,154,Afrotropical,Tropical seasonal forest/savanna
+ForestF5,25.7,1396,10350,78.8048780487805,154,Afrotropical,Tropical seasonal forest/savanna
+ForestF6,25.7,1396,10350,78.8048780487805,154,Afrotropical,Tropical seasonal forest/savanna
+Garraf220Control,15.5,630,4653,0.3584905660377358,231,Palearctic,Woodland/shrubland
+Garraf220Drought,15.5,630,4653,0.3584905660377358,231,Palearctic,Woodland/shrubland
+GER_Auwald,9,512,5662,82.84848484848484,110,Palearctic,Woodland/shrubland
+GER_FRANKONIA,8.9,684,8174,40.58064516129032,334,Palearctic,Woodland/shrubland
+GER_Hainich,7.1,734,10667,85.23809523809524,451,Palearctic,Woodland/shrubland
+GER_ODENWALD,8.8,758,12403,55.39344262295082,361,Palearctic,Woodland/shrubland
+Gingin,18.4,701,3254,1.9782608695652169,56,Australian,Woodland/shrubland
+GreatWesternWoodlands,18.6,273,1085,0,455,Australian,Subtropical desert
+Guatavita_Plot 1,12.6,974,8668,17.951219512195124,2821,Neotropical,Woodland/shrubland
+Guatavita_Plot 2,12.6,974,8668,25.658536585365855,2821,Neotropical,Woodland/shrubland
+HH,9.1,786,9857,89.47692307692307,-3,Palearctic,Woodland/shrubland
+Hitchiti,17.4,1206,7813,89.29166666666667,136,Nearctic,Woodland/shrubland
+HondaB,19.5,2705,22156,95.14634146341464,1337,Panamanian,Tropical rain forest
+HP,14.7,1323,11926,28.729166666666668,100,Australian,Temperate seasonal forest
+ISPRA,11.4,1159,11203,74.35087719298245,237,Palearctic,Temperate seasonal forest
+iti.cl,19.8,1367,9728,0,728,Neotropical,Tropical seasonal forest/savanna
+iti.ds,19.7,1367,9504,47.77272727272727,750,Neotropical,Tropical seasonal forest/savanna
+iti.ss,19.8,1367,9591,0.18604651162790695,728,Neotropical,Tropical seasonal forest/savanna
+Key Largo,24.3,1325,6892,91.1063829787234,8,Nearctic,Tropical seasonal forest/savanna
+Las Verbenas,12.4,553,2663,0.10416666666666669,1601,Neotropical,Woodland/shrubland
+Litchfield,26.4,1425,7265,16,220,Australian,Tropical seasonal forest/savanna
+Llanitos_Plot 21,14.6,1542,9941,90,2510,Neotropical,Temperate seasonal forest
+Llanitos_Plot 22,14.6,1542,9941,90,2510,Neotropical,Temperate seasonal forest
+Maliau,25.6,2533,14883,97.95121951219512,298,Oriental,Tropical seasonal forest/savanna
+Mata de galeria,18.7,1602,12155,55.8,1088,Neotropical,Temperate seasonal forest
+MELIQUINA(PP),7.7,828,7087,31.127272727272725,1075,Neotropical,Temperate seasonal forest
+Meliquina(VN),7.7,828,7179,6.035714285714286,1075,Neotropical,Temperate seasonal forest
+Meranges1800Control,6,1130,11690,73.72727272727273,1718,Palearctic,Temperate seasonal forest
+Meranges2150Control,6,1130,11690,88.64814814814815,1718,Palearctic,Temperate seasonal forest
+Meranges2500Control,1.8,1406,15309,0,2449,Palearctic,Boreal forest
+Mirador,17.4,2323,23496,90.26190476190476,1695,Panamanian,Temperate rain forest
+Montseny1200Control,9.8,949,8319,89.18518518518519,1211,Palearctic,Temperate seasonal forest
+Montseny1600Control,9.8,949,9575,11.849056603773583,1211,Palearctic,Temperate seasonal forest
+Montseny800Control,11.3,871,6890,90.3148148148148,923,Palearctic,Woodland/shrubland
+Nwanedi,22.5,588,2846,0.17777777777777778,550,Afrotropical,Subtropical desert
+Ogawa,9.9,1582,14545,30.8125,641,Sino-Japanese,Temperate seasonal forest
+Ombrophilous Atlantic Forest,15.1,1827,13490,93.44186046511628,1529,Neotropical,Temperate seasonal forest
+OT,14.5,1265,11855,89.27083333333333,121,Australian,Temperate seasonal forest
+PaloSeco,21.6,3338,24912,85.36585365853658,975,Panamanian,Tropical rain forest
+PAMPACHI(PP),9.3,538,4044,25.96551724137931,857,Neotropical,Woodland/shrubland
+PAMPACHI(VN),9.3,538,4044,1.2307692307692308,857,Neotropical,Woodland/shrubland
+PE_Colorado,22.1,2950,13695,80.3409090909091,481,Panamanian,Tropical rain forest
+PE-PALM,21.1,3001,13861,87.83720930232558,645,Panamanian,Tropical rain forest
+Pinola,18.9,2627,21206,95.48780487804878,1439,Panamanian,Temperate rain forest
+Pinus caribea plantation,25.8,2832,18559,98.92682926829268,47,Neotropical,Tropical rain forest
+PO_CLOUD,21.1,3001,13932,88.11627906976744,645,Panamanian,Tropical rain forest
+Poblet,12.1,685,4303,26.23636363636364,778,Palearctic,Woodland/shrubland
+Prades950Control,12.1,676,5021,83.82142857142857,769,Palearctic,Woodland/shrubland
+Prades950Drought,12.1,676,5021,83.82142857142857,769,Palearctic,Woodland/shrubland
+Quetzal,11.4,2597,26225,89.60975609756098,2711,Panamanian,Temperate rain forest
+RobsonCreek,20.9,2149,14488,97.8095238095238,718,Australian,Tropical seasonal forest/savanna
+Sadayama,17.1,2410,17411,95.4375,113,Sino-Japanese,Temperate rain forest
+Samford,19.6,1272,6843,42.08695652173913,130,Australian,Tropical seasonal forest/savanna
+San Bernardo,17.4,491,2018,0,473,Neotropical,Temperate grassland/desert
+SanJavier,16.1,617,3865,10.808510638297872,896,Neotropical,Woodland/shrubland
+Satara_Burnt & grazed,22.4,563,3148,6.888888888888889,245,Afrotropical,Subtropical desert
+Satara_Unburnt,22.4,563,3148,6.888888888888889,245,Afrotropical,Subtropical desert
+SavRivSite,17.4,1173,7390,100,69,Nearctic,Woodland/shrubland
+sdc.cl,19.4,1501,11360,0,1017,Neotropical,Tropical seasonal forest/savanna
+sdc.ss,19.4,1501,11600,3.5681818181818183,1017,Neotropical,Tropical seasonal forest/savanna
+Tabio_Plot 10,12.7,893,8167,90.92307692307692,2763,Panamanian,Woodland/shrubland
+Tabio_Plot 7,12.7,893,9297,88.60975609756098,2763,Panamanian,Woodland/shrubland
+Tabio_Plot 8,12.7,893,8167,86.34146341463415,2763,Panamanian,Woodland/shrubland
+Tabio_Plot 9,12.7,893,8167,91.63414634146342,2763,Panamanian,Woodland/shrubland
+Teshio,6.2,1223,14176,33.2,37,Sino-Japanese,Temperate seasonal forest
+Torca_Plot 11,12.3,943,10297,89.8048780487805,2825,Panamanian,Woodland/shrubland
+Torca_Plot 12,12.3,943,10297,89.38095238095238,2825,Panamanian,Woodland/shrubland
+Torca_Plot 13,12.3,943,10229,63.58536585365854,2825,Panamanian,Woodland/shrubland
+Torca_Plot 14,12.3,943,10297,90.07317073170732,2825,Panamanian,Woodland/shrubland
+Tower_North_Carolina,16.1,1281,8786,1.1458333333333333,6,Nearctic,Temperate seasonal forest
+Tucuman,19,892,5148,95.47727272727272,695,Neotropical,Tropical seasonal forest/savanna
+Tuixent,6.3,1094,9020,80.03703703703704,1678,Palearctic,Temperate seasonal forest
+Tumbarumba,9.1,1476,11958,82.88,1227,Australian,Temperate seasonal forest
+Veluwe,9,802,10732,96.35384615384616,42,Palearctic,Woodland/shrubland
+VT2,4.7,1126,15697,99.51724137931036,496,Nearctic,Temperate seasonal forest
+VT3,4.7,1126,15697,99.84210526315788,496,Nearctic,Temperate seasonal forest
+VT6,4.7,1126,15697,98.76363636363637,496,Nearctic,Temperate seasonal forest
+VT7,4.7,1126,15697,97.6140350877193,496,Nearctic,Temperate seasonal forest
+Warra,10.5,1453,13412,88.64285714285714,242,Australian,Temperate seasonal forest
+White Sand Forest,25.8,2818,17963,99.38095238095238,37,Neotropical,Tropical rain forest
+Wits Rural Facility,21,735,4360,15.833333333333334,590,Afrotropical,Tropical seasonal forest/savanna
+Wombat,10.9,1060,8422,85.52941176470588,699,Australian,Temperate seasonal forest
+Wright State University,11.2,977,8306,95.1923076923077,292,Nearctic,Temperate seasonal forest
+Yona,20.9,2306,14668,95.41666666666669,283,Oriental,Tropical seasonal forest/savanna
+YUCO(PP),8.4,1234,11989,92.67307692307692,907,Neotropical,Temperate seasonal forest
+YUCO(VN),7.9,1145,11471,90.32692307692308,1006,Neotropical,Temperate seasonal forest
+Zarceadero,22.1,3371,22197,95.5609756097561,902,Panamanian,Tropical rain forest
+Zofin,5.4,979,11448,81.88709677419355,891,Palearctic,Temperate seasonal forest
