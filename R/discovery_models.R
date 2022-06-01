@@ -17,7 +17,6 @@ mod_temp<-glm(termite_exposure ~ temp,
             control=list(epsilon = 1e-10, maxit = 100))
 temp <- model_parameters(mod_temp,exponentiate = TRUE)
 
-ggpredict(model = mod_temp, "temp [22.3]")
 
 
 #discovery over precipitation model
@@ -53,6 +52,8 @@ modinteraction<-glm(termite_exposure ~ prec*temp,
 nrow(modinteraction$data)
 summary(modinteraction)
 print_md(model_parameters(modinteraction,exponentiate = TRUE))
+
+ggpredict(model = modinteraction, "temp [21.3]")
 
 v <- seq(from = 0,to = 30,by = 0.5)
 v2 <- c(250, 2000, 2700)
