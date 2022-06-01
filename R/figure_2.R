@@ -1,7 +1,6 @@
 library(tidyverse)
 library(ggeffects)
 library(patchwork)
-library(phylopic)
 library(jpeg)
 #load data
 mm <- read_csv("data/decomp_with_covar.csv") %>%
@@ -90,27 +89,19 @@ site_means <- mm %>%
          prec_m = prec/1000, 
          k_value_tr = log(k_value))
 #decay model by termite exposure and across precip and temperature
-m2w <- lm(k_value_tr ~ termite_exposure*temp*prec, data=site_means, weights=n)
+m2w <- lm(k_value_tr ~ termite_exposure*temp, data=site_means, weights=n)
 
 x1 <- 250
 y1 <- 2000
 z1 <- 2700
 v <- c(x1, y1, z1)
 #Predict model over temperature and precipitation
-mod2_pred <- ggpredict(m2w, c("temp","prec [v]"))
+mod2_pred <- ggpredict(m2w, c("temp"))
 
 #generate DB with prediction for plotting
 pred_m <- bind_rows(data.frame(termite_exposure=factor(0, levels=c('0', '1')), 
                                alt=mean(site_means$alt), 
                                abs_lat=mean(site_means$abs_lat), 
-                               forestcover100=mean(site_means$forestcover100), 
-                               prec=250, 
-                               temp=seq(min(site_means$temp), max(site_means$temp), 1)), 
-                    data.frame(termite_exposure=factor(0, levels=c('0', '1')), 
-                               alt=mean(site_means$alt), 
-                               abs_lat=mean(site_means$abs_lat), 
-                               forestcover100=mean(site_means$forestcover100), 
-                               prec=2700, 
                                temp=seq(min(site_means$temp), max(site_means$temp), 1)))
 pred_m$k_value_tr <- predict(m2w, newdata=pred_m, se.fit=FALSE)
 pred_m$k_value_tr_se <- predict(m2w, newdata=pred_m, se.fit=TRUE)$se.fit
@@ -120,30 +111,20 @@ pred_m <- pred_m %>%
          k_value_lower = exp(k_value_tr - k_value_tr_se))
 
 #figure 2b microbial decay across temperature and precipitation using prediction from model
-b_plot <- ggplot(filter(site_means, termite_exposure=='0'), aes(x=temp, y=k_value, col=prec, size=n)) + 
+b_plot <- ggplot(filter(site_means, termite_exposure=='0'), aes(x=temp, y=k_value, size=n)) + 
   geom_point(alpha=0.75) + 
   labs(x=expression(`MAT `(degree * C)), y='k (per year)') + 
-  scale_colour_gradient2(low='#DCBB50',midpoint = 1700,mid = '#727272', high='#317A22', name='MAP (mm)') +
   scale_size(name='# wood blocks') + 
   scale_x_log10()+
-  stat_smooth(aes(x=temp, y=k_value), data=filter(pred_m, termite_exposure=='0', prec==250), 
+  stat_smooth(aes(x=temp, y=k_value), data=filter(pred_m, termite_exposure=='0'), 
               method='glm', formula = y~x,method.args = list(family = gaussian(link = 'log')), 
-              se=FALSE, inherit.aes=FALSE, colour='#DCBB50') + 
-  stat_smooth(aes(x=temp, y=k_value_upper), data=filter(pred_m, termite_exposure=='0', prec==250), 
+              se=FALSE, inherit.aes=FALSE, colour='black') + 
+  stat_smooth(aes(x=temp, y=k_value_upper), data=filter(pred_m, termite_exposure=='0'), 
               method='glm', formula = y~x,method.args = list(family = gaussian(link = 'log')), 
-              se=FALSE, inherit.aes=FALSE, colour='#DCBB50', linetype='dashed') + 
-  stat_smooth(aes(x=temp, y=k_value_lower), data=filter(pred_m, termite_exposure=='0', prec==250), 
+              se=FALSE, inherit.aes=FALSE, colour='black', linetype='dashed') + 
+  stat_smooth(aes(x=temp, y=k_value_lower), data=filter(pred_m, termite_exposure=='0'), 
               method='glm', formula = y~x,method.args = list(family = gaussian(link = 'log')), 
-              se=FALSE, inherit.aes=FALSE, colour='#DCBB50', linetype='dashed') + 
-  stat_smooth(aes(x=temp, y=k_value), data=filter(pred_m, termite_exposure=='0', prec==2700), 
-              method='glm', formula = y~x,method.args = list(family = gaussian(link = 'log')), 
-              se=FALSE, inherit.aes=FALSE, colour='#317A22') + 
-  stat_smooth(aes(x=temp, y=k_value_upper), data=filter(pred_m, termite_exposure=='0', prec==2700), 
-              method='glm', formula = y~x,method.args = list(family = gaussian(link = 'log')), 
-              se=FALSE, inherit.aes=FALSE, colour='#317A22', linetype='dashed') + 
-  stat_smooth(aes(x=temp, y=k_value_lower), data=filter(pred_m, termite_exposure=='0', prec==2700), 
-              method='glm', formula = y~x,method.args = list(family = gaussian(link = 'log')), 
-              se=FALSE, inherit.aes=FALSE, colour='#317A22', linetype='dashed') + 
+              se=FALSE, inherit.aes=FALSE, colour='black', linetype='dashed') + 
   guides(size = "none")+
   labs(title = "B")+
   theme_classic()+
