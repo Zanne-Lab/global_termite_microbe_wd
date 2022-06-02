@@ -111,3 +111,6 @@ f<-ggplot(mmm,aes(x=abs_lat,y=discovered*100))+
 ggsave("figures/figure_S1.png",width=9.2,height=4)
 ggsave("figures/figure_S1.pdf",dpi = 300)
 
+
+#Figure S1 caption, termite discovery quantiles
+mmm %>% summarise(quantile(discovered, c(0.05, 0.5, 0.95)))

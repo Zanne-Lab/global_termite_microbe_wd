@@ -199,3 +199,35 @@ model_parameters(m2w_NC)
 r2(m2w_NC)
 summary(m2w_NC)
 nrow(filter(mmm,termite_exposure ==1))
+
+
+## check for mesh hole effect on undiscovered baits (no effect observed)
+mm %>% 
+  filter(termite_exposure == 0) %>% 
+  group_by(site, trt) %>% 
+  summarise(temp = temp[1], 
+            prec = prec[1], 
+            forestcover100 = forestcover100[1], 
+            alt = alt[1],
+            date_diff_years=date_diff_years[1],
+            lat = lat[1],
+            N_pc = N_pc[1],
+            C_pc = C_pc[1],
+            n = n(), 
+            k_value= mean(k_value),
+            #kval = log(k_value),
+            discovered = mean(termite_exposure)) %>%
+  ungroup() %>% 
+  mutate(trt = factor(trt), 
+         abs_lat = abs(lat), 
+         prec_m = prec/1000, 
+         k_value_tr = log(k_value+abs(min(k_value))+0.001))->site_means_u
+hist(site_means_u$k_value)
+hist(site_means_u$k_value_tr)
+
+m1w_u <- lm(k_value_tr ~ trt*temp*prec +
+              trt*alt + trt*abs_lat, data=site_means_u, weights=n)
+summary(m1w_u)[['r.squared']]
+car::qqPlot(m1w_u)
+car::residualPlot(m1w_u)
+car::Anova(m1w_u, type='II')

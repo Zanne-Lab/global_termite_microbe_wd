@@ -190,3 +190,11 @@ d <- ggplot(mmm,aes(x=prec,y=k_value, colour = termite_exposure))+
 #save plots
 ggsave("figures/figure_S2.png")
 ggsave("figures/figure_S2.pdf", dpi = 300)
+
+#Figure S2 caption, decomposition quantiles
+#microbial decay
+quantile(1-exp(-filter(mmm, termite_exposure==0)$k_value*2), 
+         c(0.05, 0.5, 0.95))
+#microbial+termite decay
+quantile(1-exp(-filter(mmm, termite_exposure==1)$k_value*2), 
+         c(0.05, 0.5, 0.95))

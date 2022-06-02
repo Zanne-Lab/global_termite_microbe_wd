@@ -34,7 +34,7 @@ l$group <- as.numeric(as.character(l$group))
 
 mm %>%
   filter(!is.na(lat) & !is.na(realms)) %>%
-  group_by(Country, site,realms) %>%
+  group_by(country, site,realms) %>%
   summarise(lat=unique(lat),
             long=unique(long),
             k_mean =mean(k_value, na.rm=TRUE),
@@ -88,7 +88,7 @@ biome <-ggplot()+geom_polygon(data = Whittaker_biomes,aes(x = temp_c, y = precp_
         legend.position = "none")
 
 #biomes boxplots by termite discovery figure 1 C
-a_dat <- read_csv("processed_data/decomp_with_covar.csv") %>%
+a_dat <- read_csv("data/decomp_with_covar.csv") %>%
   filter(trt %in% c("T", "C") &
            species != "Simarouba_amara")
 
