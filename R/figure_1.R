@@ -9,13 +9,18 @@ library(rgdal)
 library(plotbiomes)
 library(patchwork)
 library(ggeffects)
+library(khroma)
 #read data
 a <- read_csv("data/decomp_with_covar.csv") %>%
   filter(trt %in% c("T", "C") &
            !is.na(termite_exposure) &
            species != "Simarouba_amara")
-
-
+#set biome colour palette
+Biomes <- sunset(9)
+names(Biomes) <- c("Tundra" ,"Boreal forest" ,"Temperate seasonal forest",
+                   "Temperate rain forest" ,"Tropical rain forest", 
+                   "Tropical seasonal forest/savanna","Subtropical desert" ,
+                   "Temperate grassland/desert" ,"Woodland/shrubland")
 #discovery model
 mm<-a %>%
   filter(trt %in% c("T")) %>%
@@ -34,7 +39,7 @@ l$group <- as.numeric(as.character(l$group))
 
 mm %>%
   filter(!is.na(lat) & !is.na(realms)) %>%
-  group_by(country, site,realms) %>%
+  group_by(Country, site,realms) %>%
   summarise(lat=unique(lat),
             long=unique(long),
             k_mean =mean(k_value, na.rm=TRUE),
@@ -55,7 +60,7 @@ sites <- ggplot(world)+
   geom_sf(fill= "white")+
   geom_point(data=site_mean,
              aes(x=long, y=lat,colour=predicted*100), size = 3.5)+
-  scale_colour_viridis_c(option = "B", name = "% discovered", 
+  scale_colour_viridis_c(option = "B", name = "% discovered",direction = -1, 
                          breaks = c(0,10,30,50,70,80,90,100))+
   xlab(expression(paste("Longitude (",degree,")"))) +
   ylab(expression(paste("Latitude (",degree,")")))+
@@ -69,9 +74,9 @@ sites <- ggplot(world)+
 Whittaker_biomes$precp_mm <- Whittaker_biomes$precp_cm*10
 biome <-ggplot()+geom_polygon(data = Whittaker_biomes,aes(x = temp_c, y = precp_mm, fill = biome), 
                               colour = "gray98", size = 1) +
-  scale_fill_manual(name = "Whittaker biomes", 
-                    breaks = names(Ricklefs_colors), labels = names(Ricklefs_colors),
-                    values = Ricklefs_colors) +
+  scale_fill_manual(name = "Whittaker biomes",
+                    breaks = names(Biomes), labels = names(Biomes),
+                    values = Biomes) +
   xlab(expression(paste("MAT (",degree," C)"))) +
   scale_y_continuous("MAP (mm)")+
   geom_point(data = site_mean,
@@ -80,7 +85,7 @@ biome <-ggplot()+geom_polygon(data = Whittaker_biomes,aes(x = temp_c, y = precp_
                  colour = predicted*100), # map `status` variable to colour
              shape = 16,
              size  = 2.5)+
-  scale_color_viridis_c(option = "B", name = "% discovered", 
+  scale_color_viridis_c(option = "B", name = "% discovered",direction = -1,
                         breaks = c(0,10,30,50,70,80,90,100), guide = "none")+
   labs(title = "B")+
   theme_classic()+
@@ -118,10 +123,11 @@ boxplot_biomes <- ggplot(mm, aes(x = biome, y =k_value, fill = biome, linetype =
   geom_boxplot()+
   scale_linetype_discrete(labels = c("Undiscovered","Discovered"),name   = "Termite discovery")+
   scale_y_log10()+
-  scale_fill_manual(name   = "Whittaker biomes",
-                    breaks = names(Ricklefs_colors),
-                    labels = names(Ricklefs_colors),
-                    values = Ricklefs_colors)+
+  scale_fill_manual(name = "Whittaker biomes",
+                    breaks = names(Biomes), labels = names(Biomes),
+                    values = Biomes,
+                    guide=guide_legend(override.aes = list(linetype = c(0, 0,0,0,0,0,0,0,0)))
+                    ) +
   geom_text(data = filter(ss,termite_exposure==0 &
                             !(biome %in% c("Boreal forest", "Temperate grassland/desert"))),
             aes(y = k_value,x = biome,label = sample_size),
