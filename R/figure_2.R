@@ -2,6 +2,7 @@ library(tidyverse)
 library(ggeffects)
 library(patchwork)
 library(jpeg)
+library(khroma)
 #load data
 mm <- read_csv("data/decomp_with_covar.csv") %>%
   filter(trt %in% c("T", "C") &
@@ -31,6 +32,7 @@ macrotermite_d <- readJPEG("images/soldier.jpg",native = TRUE)
 fungi <- readJPEG("images/fungi.jpg",native = TRUE)
 termite_fungi <- readJPEG("images/termiteFungi.jpg",native = TRUE)
 
+
 #figure 2 A termite discovery over climate (temperature and rainfall)
 mm %>% 
   filter(trt == 'T') %>% 
@@ -43,26 +45,24 @@ mm %>%
             discovered = mean(termite_exposure)) %>% 
   ggplot(aes(temp, discovered*100, color=prec, size = n)) + 
   geom_point() + 
-  scale_x_log10()+
-  #scale_colour_viridis_c(option = "E")+ #317A22
-  scale_colour_gradient2(low='#DCBB50',midpoint = 1700,mid = '#727272', high='#317A22', name='MAP (mm)') +
+  scale_size(name ='# wood blocks')+
+  scale_colour_gradient2(low='#364B9A',midpoint = 1700,mid = '#EAECCC', high='#FDC072', name='MAP (mm)') +
   geom_line(aes(x=x, y=predicted*100), data=filter(mod2_pred, group==x1), 
-            inherit.aes=FALSE, colour='#DCBB50') + 
+            inherit.aes=FALSE, colour='#364B9A') + 
   geom_ribbon(aes(x=x, ymin=conf.low*100, ymax=conf.high*100), data=filter(mod2_pred, group==x1), 
-              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#DCBB50') + 
-  geom_line(aes(x=x, y=predicted*100), data=filter(mod2_pred, group==y1), 
-            inherit.aes=FALSE, colour='#727272') + 
-  geom_ribbon(aes(x=x, ymin=conf.low*100, ymax=conf.high*100), data=filter(mod2_pred, group==y1), 
-              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#727272') + 
-  geom_line(aes(x=x, y=predicted*100), data=filter(mod2_pred, group==z1), 
-            inherit.aes=FALSE, colour='#317A22') + 
-  geom_ribbon(aes(x=x, ymin=conf.low*100, ymax=conf.high*100), data=filter(mod2_pred, group==z1), 
-              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#317A22') + 
+              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#364B9A') + 
+  geom_line(aes(x=x, y=predicted*100), data=filter(mod2_pred, group==y1 & x >4.7), 
+            inherit.aes=FALSE, colour='#EAECCC') + 
+  geom_ribbon(aes(x=x, ymin=conf.low*100, ymax=conf.high*100), data=filter(mod2_pred, group==y1 & x >4.7), 
+              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#EAECCC') + 
+  geom_line(aes(x=x, y=predicted*100), data=filter(mod2_pred, group==z1 & x > 11), 
+            inherit.aes=FALSE, colour='#FDC072') + 
+  geom_ribbon(aes(x=x, ymin=conf.low*100, ymax=conf.high*100), data=filter(mod2_pred, group==z1 & x > 11), 
+              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#FDC072') + 
   xlab(expression(`MAT `(degree * C))) + ylab('% discovered') + 
   labs(title = "A")+
   theme_classic()+
-  theme(legend.position = "none",
-        text = element_text(size = 9, family = "Helvetica"), 
+  theme(text = element_text(size = 9, family = "Helvetica"), 
         title = element_text(size=10),
         axis.title.x = element_blank(),axis.text.x=element_blank())->a_plot
 
@@ -115,7 +115,6 @@ b_plot <- ggplot(filter(site_means, termite_exposure=='0'), aes(x=temp, y=k_valu
   geom_point(alpha=0.75) + 
   labs(x=expression(`MAT `(degree * C)), y='k (per year)') + 
   scale_size(name='# wood blocks') + 
-  scale_x_log10()+
   stat_smooth(aes(x=temp, y=k_value), data=filter(pred_m, termite_exposure=='0'), 
               method='glm', formula = y~x,method.args = list(family = gaussian(link = 'log')), 
               se=FALSE, inherit.aes=FALSE, colour='black') + 
@@ -151,35 +150,34 @@ pred_t <- pred_t %>%
 c_plot <- ggplot(filter(site_means, termite_exposure=='1'), aes(x=temp, y=k_value, size=n)) + 
   geom_point(alpha=0.75) + 
   labs(x=expression(`MAT `(degree * C)), y='k (per year)') + 
-  scale_x_log10()+
   scale_size(name='# wood blocks') + 
-  stat_smooth(aes(x=temp, y=k_value), data=filter(pred_t, termite_exposure=='1'), 
+  stat_smooth(aes(x=temp, y=k_value), data=filter(pred_t, termite_exposure=='1' & temp > 4), 
               method='glm', formula = y~x,method.args = list(family = gaussian(link = 'log')), 
               se=FALSE, inherit.aes=FALSE, colour='black') + 
-  stat_smooth(aes(x=temp, y=k_value_upper), data=filter(pred_t, termite_exposure=='1'), 
+  stat_smooth(aes(x=temp, y=k_value_upper), data=filter(pred_t, termite_exposure=='1' & temp > 4), 
               method='glm', formula = y~x,method.args = list(family = gaussian(link = 'log')), 
               se=FALSE, inherit.aes=FALSE, colour='black', linetype='dashed') + 
-  stat_smooth(aes(x=temp, y=k_value_lower), data=filter(pred_t, termite_exposure=='1'), 
+  stat_smooth(aes(x=temp, y=k_value_lower), data=filter(pred_t, termite_exposure=='1' & temp > 4), 
               method='glm', formula = y~x,method.args = list(family = gaussian(link = 'log')), 
               se=FALSE, inherit.aes=FALSE, colour='black', linetype='dashed') + 
   labs(title = "C")+
   theme_classic()+
-  theme(text = element_text(size = 9, family = "Helvetica"), title = element_text(size=10))
+  theme(legend.position = "none",text = element_text(size = 9, family = "Helvetica"), title = element_text(size=10))
 
 # Put panel a, b and c together
-fig_2 <-a_plot+inset_element(macrotermite_d,left = 0.0,
+fig_2 <-a_plot+inset_element(macrotermite_d,left = 0.2,
                              bottom = 0.65,
                              right = 0.5,
                              top = 0.95)+
-  b_plot+inset_element(fungi,left = 0.0,
+  b_plot+inset_element(fungi,left = 0.2,
                        bottom = 0.65,
                        right = 0.5,
                        top = 0.95)+plot_layout(ncol = 1)+
-  c_plot+inset_element(termite_fungi,left = 0.0,
+  c_plot+inset_element(termite_fungi,left = 0.2,
                        bottom = 0.65,
                        right = 0.5,
                        top = 0.95)+plot_layout(ncol = 1)
 
-fig_2 &  xlim(1, 30)
-ggsave(fig_2,filename = "figures/fig_2.pdf",height = 13,width = 8, dpi = 300)
-ggsave(fig_2,filename = "figures/figure_2.png",height = 13,width = 8)
+fig_2 &  xlim(1, 27) 
+ggsave(fig_2 &  xlim(1, 27),filename = "figures/fig_2.pdf",height = 13,width = 8, dpi = 300)
+ggsave(fig_2 &  xlim(1, 27),filename = "figures/figure_2.png",height = 13,width = 8)

@@ -16,6 +16,7 @@ a <- read_csv("data/decomp_with_covar.csv") %>%
            !is.na(termite_exposure) &
            species != "Simarouba_amara")
 #set biome colour palette
+sunset <- colour("sunset")
 Biomes <- sunset(9)
 names(Biomes) <- c("Tundra" ,"Boreal forest" ,"Temperate seasonal forest",
                    "Temperate rain forest" ,"Tropical rain forest", 
@@ -137,7 +138,7 @@ boxplot_biomes <- ggplot(mm, aes(x = biome, y =k_value, fill = biome, linetype =
             vjust= -1,size=5*.36)+
   geom_text(data = filter(ss,termite_exposure==1),
             aes(y = k_value-0.23,x = biome,label = sample_size),
-            vjust= -.25,hjust=-2,size=5*.36)+
+            vjust= -1,hjust=-2,size=5*.36)+
   geom_text_repel(data = sss,
                   aes(y = k_value,x = biome,label = biome),direction = "y",
                   nudge_y = -.5,
