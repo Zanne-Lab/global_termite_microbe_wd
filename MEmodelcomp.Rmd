@@ -1,0 +1,1016 @@
+---
+title: "Comparison of fixed-effects and mixed-effects models"
+output: 
+  html_document:
+    theme: flatly
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+
+library(tidyverse)
+library(ggeffects)
+library(lme4)
+library(easystats)
+library(boot)
+
+```
+
+# Table S1. Best fit bivariate models for termite discovery versus key spatial and climatic variables
+
+Fixed- and mixed-effects models are fitted for individual-level measurements with site-level random effects.
+
+```{r}
+
+mm <- read_csv("data/decomp_with_covar.csv")  %>%
+  mutate(abs_lat = abs(lat),
+         date_diff_years = date_diff/365) %>%
+  filter(trt %in% c("T") &
+           !is.na(termite_exposure) &
+           species != "Simarouba_amara")
+
+```
+
+### Temperature
+
+Fixed only:
+
+```{r}
+
+modtemp<-glm(termite_exposure ~ temp,
+            data=filter(mm, trt == 'T'), offset=date_diff_years, family=binomial(link = "logit"))
+
+model_parameters(modtemp,exponentiate = TRUE)
+
+```
+
+Mixed:
+
+```{r}
+
+modtemp<-glmer(termite_exposure ~ temp + (1|site),
+            data=filter(mm, trt == 'T'), offset=date_diff_years, family=binomial(link = "logit"))
+
+model_parameters(modtemp,exponentiate = TRUE, effects='fixed')
+
+```
+
+### Precipitation
+
+Fixed only:
+
+```{r}
+
+modpre<-glm(termite_exposure~prec,
+            data=mm,offset=date_diff_years,family = binomial(link = "logit"))
+model_parameters(modpre,exponentiate = TRUE)
+
+```
+
+Mixed:
+
+```{r}
+
+modpre<-glmer(termite_exposure~prec + (1|site),
+            data=mm,offset=date_diff_years,family = binomial(link = "logit"))
+model_parameters(modpre,exponentiate = TRUE, effects='fixed')
+
+```
+
+### Absolute latitude
+
+Fixed only:
+
+```{r}
+
+modlat<-glm(termite_exposure~abs_lat,
+             data=mm,offset=date_diff_years,family = binomial(link = "logit"))
+model_parameters(modlat,exponentiate = TRUE)
+
+```
+
+Mixed:
+
+```{r}
+
+modlat<-glmer(termite_exposure~abs_lat + (1|site),
+             data=mm,offset=date_diff_years,family = binomial(link = "logit"))
+model_parameters(modlat,exponentiate = TRUE, effects='fixed')
+
+```
+
+### Elevation
+
+Fixed only:
+
+```{r}
+
+modalt<-glm(termite_exposure~alt,
+            data=mm,offset=date_diff_years,family = binomial(link = "logit"))
+model_parameters(modalt,exponentiate = TRUE)
+
+```
+
+Mixed:
+
+```{r}
+
+modalt<-glmer(termite_exposure~alt + (1|site),
+            data=mm,offset=date_diff_years,family = binomial(link = "logit"))
+model_parameters(modalt,exponentiate = TRUE, effects='fixed')
+
+```
+
+
+
+# Table S2. Best fit bivariate models for decay (k) versus key spatial and climatic variables
+
+Fixed-effects models are fitted after calculating site-level means for decay. Mixed-effects models are fitted for individual-level measurements with site-level random effects.
+
+```{r}
+
+mm <- read_csv("data/decomp_with_covar.csv") %>%
+  filter(trt %in% c("T", "C") &
+           !is.na(termite_exposure) &
+           species != "Simarouba_amara") %>%
+  mutate(date_diff_years = date_diff/365, 
+         abs_lat = abs(lat), 
+         prec_m = prec/1000, 
+         k_value_tr = log(k_value))
+
+
+#get site level decay
+mm %>% 
+  group_by(site, termite_exposure) %>% 
+  summarise(temp = temp[1], 
+            prec = prec[1], 
+            forestcover100 = forestcover100[1], 
+            alt = alt[1],
+            date_diff_years=date_diff_years[1],
+            lat = lat[1],
+            N_pc = N_pc[1],
+            C_pc = C_pc[1],
+            n = n(), 
+            k_value= mean(k_value),
+            #kval = log(k_value),
+            discovered = mean(termite_exposure)) %>%
+  ungroup() %>% 
+  mutate(termite_exposure = factor(termite_exposure), 
+         abs_lat = abs(lat), 
+         prec_m = prec/1000, 
+         k_value_tr = log(k_value))->mmm
+
+```
+
+### Absolute latitude -- termite decay
+
+Fixed only:
+
+```{r}
+
+modlatt<-lm(k_value_tr ~abs_lat,
+            data=filter(mmm,termite_exposure ==1))
+model_parameters(modlatt)
+
+```
+
+Mixed:
+
+```{r}
+
+modlatt<-lmer(k_value_tr ~abs_lat + (1|site),
+            data=filter(mm,termite_exposure ==1))
+model_parameters(modlatt, effects='fixed')
+
+```
+
+### Absolute latitude -- microbial decay
+
+Fixed only:
+
+```{r}
+
+modlatm<-lm(k_value_tr ~abs_lat,
+            data=filter(mmm,termite_exposure ==0))
+model_parameters(modlatm)
+
+```
+
+Mixed:
+
+```{r}
+
+modlatm<-lmer(k_value_tr ~abs_lat + (1|site),
+            data=filter(mm,termite_exposure ==0))
+model_parameters(modlatm, effects='fixed')
+
+```
+
+
+### Elevation -- termite decay
+
+Fixed only:
+
+```{r}
+
+modaltt<-lm(k_value_tr ~alt,
+            data=filter(mmm,termite_exposure ==1))
+model_parameters(modaltt)
+
+```
+
+Mixed:
+
+```{r}
+
+modaltt<-lmer(k_value_tr ~alt + (1|site),
+            data=filter(mm,termite_exposure ==1))
+model_parameters(modaltt, effects='fixed')
+
+```
+
+
+### Elevation -- microbial decay
+
+Fixed only:
+
+```{r}
+
+modaltm<-lm(k_value_tr ~alt,
+            data=filter(mmm,termite_exposure ==0))
+model_parameters(modaltm)
+
+```
+
+Mixed:
+
+```{r}
+
+modaltm<-lmer(k_value_tr ~alt + (1|site),
+            data=filter(mm,termite_exposure ==0))
+model_parameters(modaltm, effects='fixed')
+
+```
+
+### Temperature -- termite decay
+
+Fixed only:
+
+```{r}
+
+modtempt<-lm(k_value_tr ~temp,
+             data=filter(mmm,termite_exposure ==1))
+model_parameters(modtempt)
+
+```
+
+Mixed:
+
+```{r}
+
+modtempt<-lmer(k_value_tr ~temp + (1|site),
+             data=filter(mm,termite_exposure ==1))
+model_parameters(modtempt, effects='fixed')
+
+```
+
+
+### Temperature -- microbial decay
+
+Fixed only:
+
+```{r}
+
+modtempm<-lm(k_value_tr ~temp,
+             data=filter(mmm,termite_exposure ==0))
+model_parameters(modtempm)
+
+```
+
+Mixed:
+
+```{r}
+
+modtempm<-lmer(k_value_tr ~temp + (1|site),
+             data=filter(mm,termite_exposure ==0))
+model_parameters(modtempm, effects='fixed')
+
+```
+
+
+### Precipitation -- termite decay
+
+Fixed only:
+
+```{r}
+
+modprect<-lm(k_value_tr ~prec,
+             data=filter(mmm,termite_exposure ==1))
+model_parameters(modprect)
+
+```
+
+Mixed:
+
+```{r}
+
+modprect<-lmer(k_value_tr ~prec + (1|site),
+             data=filter(mm,termite_exposure ==1))
+model_parameters(modprect, effects='fixed')
+
+```
+
+
+### Precipitation -- microbial decay
+
+Fixed only:
+
+```{r}
+
+modprecm<-lm(k_value_tr ~prec,
+             data=filter(mmm,termite_exposure ==0))
+model_parameters(modprecm)
+
+```
+
+Mixed:
+
+```{r}
+
+modprecm<-lmer(k_value_tr ~prec + (1|site),
+             data=filter(mm,termite_exposure ==0))
+model_parameters(modprecm, effects='fixed')
+
+```
+
+
+# Table S3. Best fit multivariate model for probably of termite discovery versus climatic sensitivities
+
+Fixed- and mixed-effects models are fitted for individual-level measurements with site-level random effects.
+
+```{r}
+
+mm <- read_csv("data/decomp_with_covar.csv")  %>%
+  mutate(abs_lat = abs(lat),
+         date_diff_years = date_diff/365) %>%
+  filter(trt %in% c("T") &
+           !is.na(termite_exposure) &
+           species != "Simarouba_amara")
+
+```
+
+Fixed only: 
+
+```{r}
+
+modinteraction<-glm(termite_exposure ~ prec*temp,
+                    data=filter(mm, trt == 'T'), offset=date_diff_years, family=binomial(link = "logit"))
+model_parameters(modinteraction,exponentiate = TRUE)
+
+```
+
+Mixed:
+
+```{r}
+
+modinteraction<-glmer(termite_exposure ~ prec*temp + (1|site),
+                    data=filter(mm, trt == 'T'), offset=date_diff_years, family=binomial(link = "logit"))
+model_parameters(modinteraction,exponentiate = TRUE, effects='fixed')
+
+```
+
+
+# Table S4. Best fit multivariate model for microbe (termite undiscovered) wood decay (k) versus climatic sensitivities
+
+Fixed-effects models are fitted after calculating site-level means for decay and weighting sites by the number of observations in each category. Mixed-effects models are fitted for individual-level measurements with site-level random effects.
+
+```{r}
+
+mm <- read_csv("data/decomp_with_covar.csv") %>%
+  filter(trt %in% c("T", "C") &
+           !is.na(termite_exposure) &
+           species != "Simarouba_amara") %>%
+  mutate(date_diff_years = date_diff/365, 
+         abs_lat = abs(lat), 
+         prec_m = prec/1000, 
+         k_value_tr = log(k_value))
+
+
+#get site level decay
+mm %>% 
+  group_by(site, termite_exposure) %>% 
+  summarise(temp = temp[1], 
+            prec = prec[1], 
+            forestcover100 = forestcover100[1], 
+            alt = alt[1],
+            date_diff_years=date_diff_years[1],
+            lat = lat[1],
+            N_pc = N_pc[1],
+            C_pc = C_pc[1],
+            n = n(), 
+            k_value= mean(k_value),
+            #kval = log(k_value),
+            discovered = mean(termite_exposure)) %>%
+  ungroup() %>% 
+  mutate(termite_exposure = factor(termite_exposure), 
+         abs_lat = abs(lat), 
+         prec_m = prec/1000, 
+         k_value_tr = log(k_value))->mmm
+
+```
+
+Fixed only: 
+
+```{r}
+
+m1w <- lm(k_value_tr ~ temp*prec_m ,
+          data=filter(mmm,termite_exposure ==0), weights=n)
+model_parameters(m1w)
+
+```
+
+Mixed:
+
+```{r}
+
+m1w <- lmer(k_value_tr ~ temp*prec_m + (1|site),
+          data=filter(mm,termite_exposure ==0))
+model_parameters(m1w, effects='fixed')
+
+```
+
+# Table S5. Best fit multivariate model for microbe + termite (termite discovered) wood decay (k) versus climatic sensitivities
+
+Fixed-effects models are fitted after calculating site-level means for decay and weighting sites by the number of observations in each category. Mixed-effects models are fitted for individual-level measurements with site-level random effects.
+
+```{r}
+
+mm <- read_csv("data/decomp_with_covar.csv") %>%
+  filter(trt %in% c("T", "C") &
+           !is.na(termite_exposure) &
+           species != "Simarouba_amara") %>%
+  mutate(date_diff_years = date_diff/365, 
+         abs_lat = abs(lat), 
+         prec_m = prec/1000, 
+         k_value_tr = log(k_value))
+
+
+#get site level decay
+mm %>% 
+  group_by(site, termite_exposure) %>% 
+  summarise(temp = temp[1], 
+            prec = prec[1], 
+            forestcover100 = forestcover100[1], 
+            alt = alt[1],
+            date_diff_years=date_diff_years[1],
+            lat = lat[1],
+            N_pc = N_pc[1],
+            C_pc = C_pc[1],
+            n = n(), 
+            k_value= mean(k_value),
+            #kval = log(k_value),
+            discovered = mean(termite_exposure)) %>%
+  ungroup() %>% 
+  mutate(termite_exposure = factor(termite_exposure), 
+         abs_lat = abs(lat), 
+         prec_m = prec/1000, 
+         k_value_tr = log(k_value))->mmm
+
+```
+
+Fixed only: 
+
+```{r}
+
+m2w <- lm(k_value_tr ~ temp*prec_m ,
+          data=filter(mmm,termite_exposure ==1), weights=n)
+model_parameters(m2w)
+
+```
+
+Mixed:
+
+```{r}
+
+m2w <- lmer(k_value_tr ~ temp*prec_m + (1|site),
+          data=filter(mm,termite_exposure ==1))
+model_parameters(m2w, effects='fixed')
+
+```
+
+
+# Table S6. Best fit bivariate models for termite discovery versus key spatial and climatic variables and wood chemistry
+
+Fixed- and mixed-effects models are fitted for individual-level measurements with site-level random effects.
+
+```{r}
+
+mm <- read_csv("data/decomp_with_covar.csv")  %>%
+  mutate(abs_lat = abs(lat),
+         date_diff_years = date_diff/365) %>%
+  filter(trt %in% c("T") &
+           !is.na(termite_exposure) &
+           species != "Simarouba_amara")
+
+```
+
+### Temperature
+
+Fixed only:
+
+```{r}
+
+mod_temp_NC<-glm(termite_exposure ~ temp+N_pc+C_pc,
+              data=filter(mm, trt == 'T'), offset=date_diff_years, family=binomial(link = "logit"))
+model_parameters(mod_temp_NC,exponentiate = TRUE)
+
+```
+
+Mixed:
+
+```{r}
+
+modtemp_NC<-glmer(termite_exposure ~ temp+N_pc+C_pc + (1|site),
+              data=filter(mm, trt == 'T'), offset=date_diff_years, family=binomial(link = "logit"))
+model_parameters(modtemp_NC,exponentiate = TRUE, effects='fixed')
+
+```
+
+### Precipitation
+
+Fixed only:
+
+```{r}
+
+modpre_NC<-glm(termite_exposure~prec+N_pc+C_pc,
+            data=mm,offset=date_diff_years,family = binomial(link = "logit"))
+model_parameters(modpre_NC,exponentiate = TRUE)
+
+```
+
+Mixed:
+
+```{r}
+
+modpre_NC<-glmer(termite_exposure~prec+N_pc+C_pc + (1|site),
+            data=mm,offset=date_diff_years,family = binomial(link = "logit"))
+model_parameters(modpre_NC,exponentiate = TRUE, effects='fixed')
+
+```
+
+### Absolute latitude
+
+Fixed only:
+
+```{r}
+
+modlat_NP<-glm(termite_exposure~abs_lat+N_pc+C_pc,
+            data=mm,offset=date_diff_years,family = binomial(link = "logit"))
+model_parameters(modlat_NP,exponentiate = TRUE)
+
+```
+
+Mixed:
+
+```{r}
+
+modlat_NP<-glmer(termite_exposure~abs_lat+N_pc+C_pc + (1|site),
+            data=mm,offset=date_diff_years,family = binomial(link = "logit"))
+model_parameters(modlat_NP,exponentiate = TRUE, effects='fixed')
+
+```
+
+### Elevation
+
+Fixed only:
+
+```{r}
+
+modalt_NC<-glm(termite_exposure~alt+N_pc+C_pc,
+            data=mm,offset=date_diff_years,family = binomial(link = "logit"))
+model_parameters(modalt_NC,exponentiate = TRUE)
+
+```
+
+Mixed:
+
+```{r}
+
+modalt_NC<-glmer(termite_exposure~alt+N_pc+C_pc + (1|site),
+            data=mm,offset=date_diff_years,family = binomial(link = "logit"))
+model_parameters(modalt_NC,exponentiate = TRUE, effects='fixed')
+
+```
+
+
+# Table S7. Best fit bivariate models for decay (k) versus key spatial versus climatic variables and wood chemistry
+
+Fixed-effects models are fitted after calculating site-level means for decay. Mixed-effects models are fitted for individual-level measurements with site-level random effects.
+
+```{r}
+
+mm <- read_csv("data/decomp_with_covar.csv") %>%
+  filter(trt %in% c("T", "C") &
+           !is.na(termite_exposure) &
+           species != "Simarouba_amara") %>%
+  mutate(date_diff_years = date_diff/365, 
+         abs_lat = abs(lat), 
+         prec_m = prec/1000, 
+         k_value_tr = log(k_value))
+
+
+#get site level decay
+mm %>% 
+  group_by(site, termite_exposure) %>% 
+  summarise(temp = temp[1], 
+            prec = prec[1], 
+            forestcover100 = forestcover100[1], 
+            alt = alt[1],
+            date_diff_years=date_diff_years[1],
+            lat = lat[1],
+            N_pc = N_pc[1],
+            C_pc = C_pc[1],
+            n = n(), 
+            k_value= mean(k_value),
+            #kval = log(k_value),
+            discovered = mean(termite_exposure)) %>%
+  ungroup() %>% 
+  mutate(termite_exposure = factor(termite_exposure), 
+         abs_lat = abs(lat), 
+         prec_m = prec/1000, 
+         k_value_tr = log(k_value))->mmm
+
+#Termite decay across elevation
+
+#Microbial decay across elevation
+modaltm_NC<-lm(k_value_tr ~alt+N_pc+C_pc,
+            data=filter(mmm,termite_exposure ==0)
+)
+
+#Termite decay across temperature
+
+#Microbial decay across temperature
+modtempm_NC<-lm(k_value_tr ~temp+N_pc+C_pc,
+             data=filter(mmm,termite_exposure ==0)
+)
+
+
+
+```
+
+### Absolute latitude -- termite decay
+
+Fixed only:
+
+```{r}
+
+modlatt_NC<-lm(k_value_tr ~abs_lat+N_pc+C_pc,
+            data=filter(mmm,termite_exposure ==1)
+)
+model_parameters(modlatt_NC)
+
+```
+
+Mixed:
+
+```{r}
+
+modlatt_NC<-lmer(k_value_tr ~abs_lat+N_pc+C_pc + (1|site),
+            data=filter(mm,termite_exposure ==1)
+)
+model_parameters(modlatt_NC, effects='fixed')
+
+```
+
+### Absolute latitude -- microbial decay
+
+Fixed only:
+
+```{r}
+
+modlatm_NC<-lm(k_value_tr ~abs_lat+N_pc+C_pc,
+            data=filter(mmm,termite_exposure ==0)
+)
+model_parameters(modlatm_NC)
+
+```
+
+Mixed:
+
+```{r}
+
+modlatm_NC<-lmer(k_value_tr ~abs_lat+N_pc+C_pc + (1|site),
+            data=filter(mm,termite_exposure ==0)
+)
+model_parameters(modlatm_NC, effects='fixed')
+
+```
+
+
+### Elevation -- termite decay
+
+Fixed only:
+
+```{r}
+
+modaltt_NC<-lm(k_value_tr ~alt+N_pc+C_pc,
+            data=filter(mmm,termite_exposure ==1)
+)
+model_parameters(modaltt_NC)
+
+```
+
+Mixed:
+
+```{r}
+
+modaltt_NC<-lmer(k_value_tr ~alt+N_pc+C_pc + (1|site),
+            data=filter(mm,termite_exposure ==1)
+)
+model_parameters(modaltt_NC, effects='fixed')
+
+```
+
+
+### Elevation -- microbial decay
+
+Fixed only:
+
+```{r}
+
+modaltm_NC<-lm(k_value_tr ~alt+N_pc+C_pc,
+            data=filter(mmm,termite_exposure ==0)
+)
+model_parameters(modaltm_NC)
+
+```
+
+Mixed:
+
+```{r}
+
+modaltm_NC<-lmer(k_value_tr ~alt+N_pc+C_pc + (1|site),
+            data=filter(mm,termite_exposure ==0)
+)
+model_parameters(modaltm_NC, effects='fixed')
+
+```
+
+
+### Temperature -- termite decay
+
+Fixed only:
+
+```{r}
+
+modtempt_NC<-lm(k_value_tr ~temp+N_pc+C_pc,
+             data=filter(mmm,termite_exposure ==1)
+)
+model_parameters(modtempt_NC)
+
+```
+
+Mixed:
+
+```{r}
+
+modtempt_NC<-lmer(k_value_tr ~temp+N_pc+C_pc + (1|site),
+             data=filter(mm,termite_exposure ==1)
+)
+model_parameters(modtempt_NC, effects='fixed')
+
+```
+
+
+### Temperature -- microbial decay
+
+Fixed only:
+
+```{r}
+
+modtempm_NC<-lm(k_value_tr ~temp+N_pc+C_pc,
+             data=filter(mmm,termite_exposure ==0)
+)
+model_parameters(modtempm_NC)
+
+```
+
+Mixed:
+
+```{r}
+
+modtempm_NC<-lmer(k_value_tr ~temp+N_pc+C_pc + (1|site),
+             data=filter(mm,termite_exposure ==0)
+)
+model_parameters(modtempm_NC, effects='fixed')
+
+```
+
+
+### Precipitation -- termite decay
+
+Fixed only:
+
+```{r}
+
+modprect_NC<-lm(k_value_tr ~prec+N_pc+C_pc,
+             data=filter(mmm,termite_exposure ==1)
+)
+model_parameters(modprect_NC)
+
+```
+
+Mixed:
+
+```{r}
+
+modprect_NC<-lmer(k_value_tr ~prec+N_pc+C_pc + (1|site),
+             data=filter(mm,termite_exposure ==1)
+)
+model_parameters(modprect_NC, effects='fixed')
+
+```
+
+
+### Precipitation -- microbial decay
+
+Fixed only:
+
+```{r}
+
+modprecm_NC<-lm(k_value_tr ~prec+N_pc+C_pc,
+             data=filter(mmm,termite_exposure ==0)
+)
+model_parameters(modprecm_NC)
+
+```
+
+Mixed:
+
+```{r}
+
+modprecm_NC<-lmer(k_value_tr ~prec+N_pc+C_pc + (1|site),
+             data=filter(mm,termite_exposure ==0)
+)
+model_parameters(modprecm_NC, effects='fixed')
+
+```
+
+
+# Table S8. Best fit multivariate model for probably of termite discovery versus climatic sensitivities and wood chemistry
+
+Fixed- and mixed-effects models are fitted for individual-level measurements with site-level random effects.
+
+```{r}
+
+mm <- read_csv("data/decomp_with_covar.csv")  %>%
+  mutate(abs_lat = abs(lat),
+         date_diff_years = date_diff/365) %>%
+  filter(trt %in% c("T") &
+           !is.na(termite_exposure) &
+           species != "Simarouba_amara")
+
+```
+
+Fixed only: 
+
+```{r}
+
+modinteraction_stoic<-glm(termite_exposure ~ prec*temp+N_pc+C_pc,
+                          data=filter(mm, trt == 'T'), offset=date_diff_years, family=binomial(link = "logit"))
+model_parameters(modinteraction_stoic,exponentiate = TRUE)
+
+```
+
+Mixed:
+
+```{r}
+
+modinteraction_stoic<-glmer(termite_exposure ~ prec*temp+N_pc+C_pc + (1|site),
+                          data=filter(mm, trt == 'T'), offset=date_diff_years, family=binomial(link = "logit"))
+model_parameters(modinteraction_stoic,exponentiate = TRUE, effects='fixed')
+
+```
+
+
+# Table S9. Best fit multivariate model for microbe (termite undiscovered) wood decay (k) versus climatic sensitivities and wood chemistry
+
+Fixed-effects models are fitted after calculating site-level means for decay and weighting sites by the number of observations in each category. Mixed-effects models are fitted for individual-level measurements with site-level random effects.
+
+```{r}
+
+mm <- read_csv("data/decomp_with_covar.csv") %>%
+  filter(trt %in% c("T", "C") &
+           !is.na(termite_exposure) &
+           species != "Simarouba_amara") %>%
+  mutate(date_diff_years = date_diff/365, 
+         abs_lat = abs(lat), 
+         prec_m = prec/1000, 
+         k_value_tr = log(k_value))
+
+
+#get site level decay
+mm %>% 
+  group_by(site, termite_exposure) %>% 
+  summarise(temp = temp[1], 
+            prec = prec[1], 
+            forestcover100 = forestcover100[1], 
+            alt = alt[1],
+            date_diff_years=date_diff_years[1],
+            lat = lat[1],
+            N_pc = N_pc[1],
+            C_pc = C_pc[1],
+            n = n(), 
+            k_value= mean(k_value),
+            #kval = log(k_value),
+            discovered = mean(termite_exposure)) %>%
+  ungroup() %>% 
+  mutate(termite_exposure = factor(termite_exposure), 
+         abs_lat = abs(lat), 
+         prec_m = prec/1000, 
+         k_value_tr = log(k_value))->mmm
+
+```
+
+Fixed only: 
+
+```{r}
+
+m1w_NC <- lm(k_value_tr ~ temp*prec_m+N_pc+C_pc ,
+             data=filter(mmm,termite_exposure ==0), weights=n)
+model_parameters(m1w_NC)
+
+```
+
+Mixed:
+
+```{r}
+
+m1w_NC <- lmer(k_value_tr ~ temp*prec_m+N_pc+C_pc + (1|site),
+             data=filter(mm,termite_exposure ==0))
+model_parameters(m1w_NC, effects='fixed')
+
+```
+
+
+# Table S10. Best fit multivariate model for microbe + termite (termite discovered) wood decay (k) versus climatic sensitivities and wood chemistry
+
+Fixed-effects models are fitted after calculating site-level means for decay and weighting sites by the number of observations in each category. Mixed-effects models are fitted for individual-level measurements with site-level random effects.
+
+```{r}
+
+mm <- read_csv("data/decomp_with_covar.csv") %>%
+  filter(trt %in% c("T", "C") &
+           !is.na(termite_exposure) &
+           species != "Simarouba_amara") %>%
+  mutate(date_diff_years = date_diff/365, 
+         abs_lat = abs(lat), 
+         prec_m = prec/1000, 
+         k_value_tr = log(k_value))
+
+
+#get site level decay
+mm %>% 
+  group_by(site, termite_exposure) %>% 
+  summarise(temp = temp[1], 
+            prec = prec[1], 
+            forestcover100 = forestcover100[1], 
+            alt = alt[1],
+            date_diff_years=date_diff_years[1],
+            lat = lat[1],
+            N_pc = N_pc[1],
+            C_pc = C_pc[1],
+            n = n(), 
+            k_value= mean(k_value),
+            #kval = log(k_value),
+            discovered = mean(termite_exposure)) %>%
+  ungroup() %>% 
+  mutate(termite_exposure = factor(termite_exposure), 
+         abs_lat = abs(lat), 
+         prec_m = prec/1000, 
+         k_value_tr = log(k_value))->mmm
+
+```
+
+Fixed only: 
+
+```{r}
+
+m2w_NC <- lm(k_value_tr ~ temp*prec_m+N_pc+C_pc ,
+             data=filter(mmm,termite_exposure ==1), weights=n)
+model_parameters(m2w_NC)
+
+```
+
+Mixed:
+
+```{r}
+
+m2w_NC <- lmer(k_value_tr ~ temp*prec_m+N_pc+C_pc + (1|site),
+             data=filter(mm,termite_exposure ==1))
+model_parameters(m2w_NC, effects='fixed')
+
+```
+
