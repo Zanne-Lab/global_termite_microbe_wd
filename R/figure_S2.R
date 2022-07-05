@@ -52,13 +52,13 @@ modlatm_pred <- ggpredict(modlatm, c("abs_lat [v]"))
 #Figure S2 b absolute laitude and decay 
 b <-ggplot(mmm,aes(x=abs_lat,y=k_value, colour=termite_exposure))+
   geom_point()+
-  geom_line(aes(x=x, y=exp(predicted)), colour='#317A22',data=modlatm_pred, 
+  geom_line(aes(x=x, y=exp(predicted)), colour='#364B9A',data=modlatm_pred, 
             inherit.aes=FALSE) + 
   geom_ribbon(aes(x=x, ymin=exp(conf.low), ymax=exp(conf.high)), data=modlatm_pred, 
-              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#317A22')+
+              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#364B9A')+
   scale_color_manual(name = "Termite discovery",
                      breaks = c(0,1),
-                     values = c("#317A22", "#DCBB50"),
+                     values = c("#364B9A", "#FDC072"),
                      labels = c("Undiscovered", "Discovered"),
                      guide = "legend")+
   labs(x = expression(`Absolute Latitude `(degree)), y = 'k (per year)')+
@@ -90,17 +90,17 @@ modaltm_pred <- ggpredict(modaltm, c("alt [v]"))
 #Figure S2 A elevation and decay 
 a <- ggplot(mmm,aes(x=alt,y=k_value, colour = termite_exposure))+
   geom_point()+
-  geom_line(aes(x=x, y=exp(predicted)), colour='#317A22',data=modaltm_pred, 
+  geom_line(aes(x=x, y=exp(predicted)), colour='#364B9A',data=modaltm_pred, 
             inherit.aes=FALSE) + 
   geom_ribbon(aes(x=x, ymin=exp(conf.low), ymax=exp(conf.high)), data=modaltm_pred, 
-              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#317A22')+
-  geom_line(aes(x=x, y=exp(predicted)), colour='#DCBB50', data=modaltt_pred, 
+              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#364B9A')+
+  geom_line(aes(x=x, y=exp(predicted)), colour='#FDC072', data=modaltt_pred, 
             inherit.aes=FALSE) + 
   geom_ribbon(aes(x=x, ymin=exp(conf.low), ymax=exp(conf.high)), data=modaltt_pred, 
-              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#DCBB50')+
+              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#FDC072')+
   scale_color_manual(name = "Termite discovery",
                      breaks = c(0,1),
-                     values = c("#317A22", "#DCBB50"),
+                     values = c("#364B9A", "#FDC072"),
                      labels = c("Undiscovered", "Discovered"),
                      guide = "legend")+
   labs(x = "Elevation (m)", y = 'k (per year)')+
@@ -129,17 +129,17 @@ modtempm_pred <- ggpredict(modtempm, c("temp [v]"))
 #Figure S2 C elevation and decay 
 c <- ggplot(mmm,aes(x=temp,y=k_value, colour = termite_exposure))+
   geom_point()+
-  geom_line(aes(x=x, y=exp(predicted)), colour='#317A22', data=modtempm_pred, 
+  geom_line(aes(x=x, y=exp(predicted)), colour='#364B9A', data=modtempm_pred, 
             inherit.aes=FALSE) + 
   geom_ribbon(aes(x=x, ymin=exp(conf.low), ymax=exp(conf.high)), data=modtempm_pred, 
-              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#317A22')+
-  geom_line(aes(x=x, y=exp(predicted)), colour='#DCBB50', data=modtempt_pred, 
+              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#364B9A')+
+  geom_line(aes(x=x, y=exp(predicted)), colour='#FDC072', data=modtempt_pred, 
             inherit.aes=FALSE) + 
   geom_ribbon(aes(x=x, ymin=exp(conf.low), ymax=exp(conf.high)), data=modtempt_pred, 
-              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#DCBB50')+
+              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#FDC072')+
   scale_color_manual(name = "Termite discovery",
                      breaks = c(0,1),
-                     values = c("#317A22", "#DCBB50"),
+                     values = c("#364B9A", "#FDC072"),
                      labels = c("Undiscovered", "Discovered"),
                      guide = "legend")+
   labs(x = expression(`MAT `(degree * C)), y = 'k (per year)')+
@@ -166,17 +166,17 @@ modprecm_pred <- ggpredict(modprecm, c("prec"))
 #Figure S2 D precipitation and decay 
 d <- ggplot(mmm,aes(x=prec,y=k_value, colour = termite_exposure))+
   geom_point()+
-  geom_line(aes(x=x, y=exp(predicted)), colour='#317A22', data=modprecm_pred, 
+  geom_line(aes(x=x, y=exp(predicted)), colour='#364B9A', data=modprecm_pred, 
             inherit.aes=FALSE) + 
   geom_ribbon(aes(x=x, ymin=exp(conf.low), ymax=exp(conf.high)), data=modprecm_pred, 
-              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#317A22')+
-  #geom_line(aes(x=x, y=exp(predicted), colour='#DCBB50'), data=modprect_pred, 
+              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#364B9A')+
+  #geom_line(aes(x=x, y=exp(predicted), colour='#FDC072'), data=modprect_pred, 
   #         inherit.aes=FALSE) + 
   #eom_ribbon(aes(x=x, ymin=exp(conf.low), ymax=exp(conf.high)), data=modprect_pred, 
-  #           inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#DCBB50')+
+  #           inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#FDC072')+
   scale_color_manual(name = "Termite discovery",
                      breaks = c(0,1),
-                     values = c("#317A22", "#DCBB50"),
+                     values = c("#364B9A", "#FDC072"),
                      labels = c("Undiscovered", "Discovered"),
                      guide = "legend")+
   labs(x = "MAP (mm)", y = 'k (per year)')+

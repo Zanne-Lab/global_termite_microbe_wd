@@ -46,19 +46,19 @@ mm %>%
   ggplot(aes(temp, discovered*100, color=prec, size = n)) + 
   geom_point() + 
   scale_size(name ='# wood blocks')+
-  scale_colour_gradient2(low='#364B9A',midpoint = 1700,mid = '#EAECCC', high='#FDC072', name='MAP (mm)') +
+  scale_colour_gradient2(low='#FDC072',midpoint = 1700,mid = '#EAECCC', high='#364B9A', name='MAP (mm)') +
   geom_line(aes(x=x, y=predicted*100), data=filter(mod2_pred, group==x1), 
-            inherit.aes=FALSE, colour='#364B9A') + 
+            inherit.aes=FALSE, colour='#FDC072') + 
   geom_ribbon(aes(x=x, ymin=conf.low*100, ymax=conf.high*100), data=filter(mod2_pred, group==x1), 
-              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#364B9A') + 
+              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#FDC072') + 
   geom_line(aes(x=x, y=predicted*100), data=filter(mod2_pred, group==y1 & x >4.7), 
             inherit.aes=FALSE, colour='#EAECCC') + 
   geom_ribbon(aes(x=x, ymin=conf.low*100, ymax=conf.high*100), data=filter(mod2_pred, group==y1 & x >4.7), 
               inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#EAECCC') + 
   geom_line(aes(x=x, y=predicted*100), data=filter(mod2_pred, group==z1 & x > 11), 
-            inherit.aes=FALSE, colour='#FDC072') + 
+            inherit.aes=FALSE, colour='#364B9A') + 
   geom_ribbon(aes(x=x, ymin=conf.low*100, ymax=conf.high*100), data=filter(mod2_pred, group==z1 & x > 11), 
-              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#FDC072') + 
+              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#364B9A') + 
   xlab(expression(`MAT `(degree * C))) + ylab('% discovered') + 
   labs(title = "A")+
   theme_classic()+

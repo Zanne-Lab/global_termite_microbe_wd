@@ -41,9 +41,9 @@ modpre_pred <- ggpredict(modpre, c("prec"))
 b<-ggplot(mmm,aes(x=prec,y=discovered*100))+
   geom_point()+
   geom_line(aes(x=x, y=predicted*100), data=modpre_pred, 
-            inherit.aes=FALSE, colour='#DCBB50') + 
+            inherit.aes=FALSE, colour='#000000') + 
   geom_ribbon(aes(x=x, ymin=conf.low*100, ymax=conf.high*100), data=modpre_pred, 
-              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#DCBB50')+
+              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#000000')+
   labs(x = "MAP (mm)", y = "% discovered")+
   theme_classic()+ theme(legend.position = "none",axis.title.y=element_blank(),
                          title = element_text(size=10), text = element_text(size = 9, family = "Helvetica"),
@@ -60,9 +60,9 @@ modtemp_pred <- ggpredict(modtemp, c("temp"))
 a<-ggplot(mmm,aes(x=temp,y=discovered*100)) +
   geom_point()+
   geom_line(aes(x=x, y=predicted*100), data=modtemp_pred, 
-            inherit.aes=FALSE, colour='#DCBB50') + 
+            inherit.aes=FALSE, colour='#000000') + 
   geom_ribbon(aes(x=x, ymin=conf.low*100, ymax=conf.high*100), data=modtemp_pred, 
-              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#DCBB50')+
+              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#000000')+
   labs(x = expression(`MAT `(degree * C)), y = "% discovered")+
   theme_classic()+ theme(legend.position = "none",
                          title = element_text(size=10), text = element_text(size = 9, family = "Helvetica"),
@@ -79,9 +79,9 @@ modalt_pred <- ggpredict(modalt, c("alt"))
 e<-ggplot(mmm,aes(x=alt,y=discovered*100))+ 
   geom_point()+
   geom_line(aes(x=x, y=predicted*100), data=modalt_pred, 
-            inherit.aes=FALSE, colour='#DCBB50') + 
+            inherit.aes=FALSE, colour='#000000') + 
   geom_ribbon(aes(x=x, ymin=conf.low*100, ymax=conf.high*100), data=modalt_pred, 
-              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#DCBB50')+
+              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#000000')+
   labs(x = "Elevation (m)", y = "% discovered")+
   theme_classic()+ theme(legend.position = "none",
                          title = element_text(size=10), text = element_text(size = 9, family = "Helvetica"),
@@ -98,9 +98,9 @@ modlat_pred <- ggpredict(modlat, c("abs_lat"))
 f<-ggplot(mmm,aes(x=abs_lat,y=discovered*100))+
   geom_point()+
   geom_line(aes(x=x, y=predicted*100), data=modlat_pred, 
-            inherit.aes=FALSE, colour='#DCBB50') + 
+            inherit.aes=FALSE, colour='#000000') + 
   geom_ribbon(aes(x=x, ymin=conf.low*100, ymax=conf.high*100), data=modlat_pred, 
-              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#DCBB50')+
+              inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#000000')+
   labs(x =expression(`Absolute Latitude `(degree)), y = "% discovered")+
   theme_classic()+ theme(legend.position = "none",axis.title.y=element_blank(),
                          title = element_text(size=10), text = element_text(size = 9, family = "Helvetica"),
