@@ -53,7 +53,7 @@ modtemp<-glm(termite_exposure~temp,
              data=mm,offset=date_diff_years,family = binomial(link = "logit"),
              control = list(epsilon = 1e-10,maxit = 100))
 #generate model predictions
-modtemp_pred <- ggpredict(modtemp, c("temp"))
+modtemp_pred <- ggpredict(modtemp, c("temp [all]")) %>% filter(x > 1.5)
 
 
 #Figure S1 C discovery model across temperature

@@ -52,6 +52,7 @@ modlatm_pred <- ggpredict(modlatm, c("abs_lat [v]"))
 #Figure S2 b absolute laitude and decay 
 b <-ggplot(mmm,aes(x=abs_lat,y=k_value, colour=termite_exposure))+
   geom_point()+
+  scale_y_continuous(trans = log_trans(), labels=scales::number_format(accuracy = 0.01))+
   geom_line(aes(x=x, y=exp(predicted)), colour='#364B9A',data=modlatm_pred, 
             inherit.aes=FALSE) + 
   geom_ribbon(aes(x=x, ymin=exp(conf.low), ymax=exp(conf.high)), data=modlatm_pred, 
@@ -61,7 +62,7 @@ b <-ggplot(mmm,aes(x=abs_lat,y=k_value, colour=termite_exposure))+
                      values = c("#364B9A", "#FDC072"),
                      labels = c("Undiscovered", "Discovered"),
                      guide = "legend")+
-  labs(x = expression(`Absolute Latitude `(degree)), y = 'k (per year)')+
+  labs(x = expression(`Absolute Latitude `(degree)), y = 'ln(k) (per year)')+
   theme_classic()+ theme(legend.position = "none", axis.title.y = element_blank(),
                          title = element_text(size=10), text = element_text(size = 9, family = "Helvetica"),
                          legend.key.size = unit(8,units = "points"))
@@ -90,6 +91,7 @@ modaltm_pred <- ggpredict(modaltm, c("alt [v]"))
 #Figure S2 A elevation and decay 
 a <- ggplot(mmm,aes(x=alt,y=k_value, colour = termite_exposure))+
   geom_point()+
+  scale_y_continuous(trans = log_trans(), labels=scales::number_format(accuracy = 0.01))+
   geom_line(aes(x=x, y=exp(predicted)), colour='#364B9A',data=modaltm_pred, 
             inherit.aes=FALSE) + 
   geom_ribbon(aes(x=x, ymin=exp(conf.low), ymax=exp(conf.high)), data=modaltm_pred, 
@@ -103,7 +105,7 @@ a <- ggplot(mmm,aes(x=alt,y=k_value, colour = termite_exposure))+
                      values = c("#364B9A", "#FDC072"),
                      labels = c("Undiscovered", "Discovered"),
                      guide = "legend")+
-  labs(x = "Elevation (m)", y = 'k (per year)')+
+  labs(x = "Elevation (m)", y = 'ln(k) (per year)')+
   theme_classic()+ theme(legend.position = "none",
                          title = element_text(size=10), text = element_text(size = 9, family = "Helvetica"),
                          legend.key.size = unit(8,units = "points"))
@@ -115,20 +117,21 @@ a <- ggplot(mmm,aes(x=alt,y=k_value, colour = termite_exposure))+
 modtempt<-lm(k_value_tr ~temp,
              data=filter(mmm,termite_exposure ==1))
 #generate model predictions
-v <- c(0,4,6,10,12,14,16,18,22,24,26.5)
-modtempt_pred <- ggpredict(modtempt, c("temp [v]"))
+v <- seq(0, 26.5, 0.5)
+modtempt_pred <- ggpredict(modtempt, c("temp [v]")) %>% filter(x > 4)
 
 #Generate temperature model for undiscovered blocks
 modtempm<-lm(k_value_tr ~temp,
              data=filter(mmm,termite_exposure ==0)
 )
 #generate model predictions
-modtempm_pred <- ggpredict(modtempm, c("temp [v]"))
+modtempm_pred <- ggpredict(modtempm, c("temp [v]")) %>% filter(x > 1.5)
 
 
 #Figure S2 C elevation and decay 
 c <- ggplot(mmm,aes(x=temp,y=k_value, colour = termite_exposure))+
   geom_point()+
+  scale_y_continuous(trans = log_trans(), labels=scales::number_format(accuracy = 0.01))+
   geom_line(aes(x=x, y=exp(predicted)), colour='#364B9A', data=modtempm_pred, 
             inherit.aes=FALSE) + 
   geom_ribbon(aes(x=x, ymin=exp(conf.low), ymax=exp(conf.high)), data=modtempm_pred, 
@@ -142,7 +145,7 @@ c <- ggplot(mmm,aes(x=temp,y=k_value, colour = termite_exposure))+
                      values = c("#364B9A", "#FDC072"),
                      labels = c("Undiscovered", "Discovered"),
                      guide = "legend")+
-  labs(x = expression(`MAT `(degree * C)), y = 'k (per year)')+
+  labs(x = expression(`MAT `(degree * C)), y = 'ln(k) (per year)')+
   theme_classic()+ theme(legend.position = "none",
                          title = element_text(size=10), text = element_text(size = 9, family = "Helvetica"),
                          legend.key.size = unit(8,units = "points"))
@@ -166,20 +169,17 @@ modprecm_pred <- ggpredict(modprecm, c("prec"))
 #Figure S2 D precipitation and decay 
 d <- ggplot(mmm,aes(x=prec,y=k_value, colour = termite_exposure))+
   geom_point()+
+  scale_y_continuous(trans = log_trans(), labels=scales::number_format(accuracy = 0.01))+
   geom_line(aes(x=x, y=exp(predicted)), colour='#364B9A', data=modprecm_pred, 
             inherit.aes=FALSE) + 
   geom_ribbon(aes(x=x, ymin=exp(conf.low), ymax=exp(conf.high)), data=modprecm_pred, 
               inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#364B9A')+
-  #geom_line(aes(x=x, y=exp(predicted), colour='#FDC072'), data=modprect_pred, 
-  #         inherit.aes=FALSE) + 
-  #eom_ribbon(aes(x=x, ymin=exp(conf.low), ymax=exp(conf.high)), data=modprect_pred, 
-  #           inherit.aes=FALSE, alpha=0, linetype='dashed', colour='#FDC072')+
   scale_color_manual(name = "Termite discovery",
                      breaks = c(0,1),
                      values = c("#364B9A", "#FDC072"),
                      labels = c("Undiscovered", "Discovered"),
                      guide = "legend")+
-  labs(x = "MAP (mm)", y = 'k (per year)')+
+  labs(x = "MAP (mm)", y = 'ln(k) (per year)')+
   theme_classic()+ theme(axis.title.y=element_blank(),
                          title = element_text(size=10), text = element_text(size = 9, family = "Helvetica"),
                          legend.key.size = unit(8,units = "points"))

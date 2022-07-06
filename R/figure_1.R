@@ -10,6 +10,7 @@ library(plotbiomes)
 library(patchwork)
 library(ggeffects)
 library(khroma)
+library(scales)
 #read data
 a <- read_csv("data/decomp_with_covar.csv") %>%
   filter(trt %in% c("T", "C") &
@@ -101,7 +102,7 @@ a_dat <- read_csv("data/decomp_with_covar.csv") %>%
 
 a %>%
   group_by(site, termite_exposure, biome) %>%
-  summarise(across(c(k_value,temp, prec,alt, lat,forestcover100, aridity),mean),sample_size=n())->mm
+  summarise(across(c(k_value,temp, prec,alt, lat),mean),sample_size=n())->mm
 
 mm %>%
   group_by(termite_exposure, biome) %>%
@@ -123,7 +124,7 @@ mm$biome <-factor(mm$biome,levels = c("Boreal forest",
 boxplot_biomes <- ggplot(mm, aes(x = biome, y =k_value, fill = biome, linetype =as.factor(termite_exposure) ))+
   geom_boxplot()+
   scale_linetype_discrete(labels = c("Undiscovered","Discovered"),name   = "Termite discovery")+
-  scale_y_log10()+
+  scale_y_continuous(trans = log_trans(), labels=scales::number_format(accuracy = 0.01))+
   scale_fill_manual(name = "Whittaker biomes",
                     breaks = names(Biomes), labels = names(Biomes),
                     values = Biomes,
@@ -141,11 +142,11 @@ boxplot_biomes <- ggplot(mm, aes(x = biome, y =k_value, fill = biome, linetype =
             vjust= -1,hjust=-2,size=5*.36)+
   geom_text_repel(data = sss,
                   aes(y = k_value,x = biome,label = biome),direction = "y",
-                  nudge_y = -.5,
+                  nudge_y = -1,
                   max.overlaps = 50,
                   #vjust = .5,
                   arrow = arrow(angle = 10,length = unit(5, "points")),size=5*.36)+
-  labs(y='k', x = "Biome",title = "C")+
+  labs(y='ln(k) (per year)', x = "Biome",title = "C")+
   theme_classic()+
   theme(axis.text.x = element_blank(),axis.text = element_text(size = 9),
         title = element_text(size=10),
