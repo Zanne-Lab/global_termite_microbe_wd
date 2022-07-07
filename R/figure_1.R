@@ -146,7 +146,7 @@ boxplot_biomes <- ggplot(mm, aes(x = biome, y =k_value, fill = biome, linetype =
                   max.overlaps = 50,
                   #vjust = .5,
                   arrow = arrow(angle = 10,length = unit(5, "points")),size=5*.36)+
-  labs(y='ln(k) (per year)', x = "Biome",title = "C")+
+  labs(y='k (per year)', x = "Biome",title = "C")+
   theme_classic()+
   theme(axis.text.x = element_blank(),axis.text = element_text(size = 9),
         title = element_text(size=10),

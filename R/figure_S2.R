@@ -3,6 +3,7 @@ library(easystats)
 library(ggeffects)
 library(patchwork)
 library(ggnewscale)
+library(scales)
 #load data
 a_dat <- read_csv("data/decomp_with_covar.csv") %>%
   filter(trt %in% c("T", "C") &
@@ -62,7 +63,7 @@ b <-ggplot(mmm,aes(x=abs_lat,y=k_value, colour=termite_exposure))+
                      values = c("#364B9A", "#FDC072"),
                      labels = c("Undiscovered", "Discovered"),
                      guide = "legend")+
-  labs(x = expression(`Absolute Latitude `(degree)), y = 'ln(k) (per year)')+
+  labs(x = expression(`Absolute Latitude `(degree)), y = 'k (per year)')+
   theme_classic()+ theme(legend.position = "none", axis.title.y = element_blank(),
                          title = element_text(size=10), text = element_text(size = 9, family = "Helvetica"),
                          legend.key.size = unit(8,units = "points"))
@@ -105,7 +106,7 @@ a <- ggplot(mmm,aes(x=alt,y=k_value, colour = termite_exposure))+
                      values = c("#364B9A", "#FDC072"),
                      labels = c("Undiscovered", "Discovered"),
                      guide = "legend")+
-  labs(x = "Elevation (m)", y = 'ln(k) (per year)')+
+  labs(x = "Elevation (m)", y = 'k (per year)')+
   theme_classic()+ theme(legend.position = "none",
                          title = element_text(size=10), text = element_text(size = 9, family = "Helvetica"),
                          legend.key.size = unit(8,units = "points"))
@@ -145,7 +146,7 @@ c <- ggplot(mmm,aes(x=temp,y=k_value, colour = termite_exposure))+
                      values = c("#364B9A", "#FDC072"),
                      labels = c("Undiscovered", "Discovered"),
                      guide = "legend")+
-  labs(x = expression(`MAT `(degree * C)), y = 'ln(k) (per year)')+
+  labs(x = expression(`MAT `(degree * C)), y = 'k (per year)')+
   theme_classic()+ theme(legend.position = "none",
                          title = element_text(size=10), text = element_text(size = 9, family = "Helvetica"),
                          legend.key.size = unit(8,units = "points"))
@@ -179,7 +180,7 @@ d <- ggplot(mmm,aes(x=prec,y=k_value, colour = termite_exposure))+
                      values = c("#364B9A", "#FDC072"),
                      labels = c("Undiscovered", "Discovered"),
                      guide = "legend")+
-  labs(x = "MAP (mm)", y = 'ln(k) (per year)')+
+  labs(x = "MAP (mm)", y = 'k (per year)')+
   theme_classic()+ theme(axis.title.y=element_blank(),
                          title = element_text(size=10), text = element_text(size = 9, family = "Helvetica"),
                          legend.key.size = unit(8,units = "points"))

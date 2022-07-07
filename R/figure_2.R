@@ -113,7 +113,7 @@ pred_m <- pred_m %>%
 #figure 2b microbial decay across temperature and precipitation using prediction from model
 b_plot <- ggplot(filter(site_means, termite_exposure=='0'), aes(x=temp, y=k_value, size=n)) + 
   geom_point(alpha=0.75) + 
-  labs(x=expression(`MAT `(degree * C)), y='ln(k) (per year)') + 
+  labs(x=expression(`MAT `(degree * C)), y='k (per year)') + 
   scale_size(name='# wood blocks') + 
   stat_smooth(aes(x=temp, y=k_value), data=filter(pred_m, termite_exposure=='0'), 
               method='glm', formula = y~x,method.args = list(family = gaussian(link = 'log')), 
@@ -149,7 +149,7 @@ pred_t <- pred_t %>%
 #Figure 2c decay of termite discovered blocks
 c_plot <- ggplot(filter(site_means, termite_exposure=='1'), aes(x=temp, y=k_value, size=n)) + 
   geom_point(alpha=0.75) + 
-  labs(x=expression(`MAT `(degree * C)), y='ln(k) (per year)') + 
+  labs(x=expression(`MAT `(degree * C)), y='k (per year)') + 
   scale_size(name='# wood blocks') + 
   stat_smooth(aes(x=temp, y=k_value), data=filter(pred_t, termite_exposure=='1' & temp > 4), 
               method='glm', formula = y~x,method.args = list(family = gaussian(link = 'log')), 
