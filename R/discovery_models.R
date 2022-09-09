@@ -46,9 +46,12 @@ kableExtra::kable(bind_rows(temp,pre, lat, alt),"pipe")
 ####
 
 #multivariate model for probably of termite discovery versus temperature and precipitation
+#Discovery interaction model Table S3
 modinteraction<-glm(termite_exposure ~ prec*temp,
                     data=filter(mm, trt == 'T'), offset=date_diff_years, family=binomial(link = "logit"),
                     control=list(epsilon = 1e-100, maxit = 10000))
+#save model for projection see termite_activity_mapping_code.R
+saveRDS(object =modinteraction,file =  "discovery.rds")
 nrow(modinteraction$data)
 summary(modinteraction)
 print_md(model_parameters(modinteraction,exponentiate = TRUE))

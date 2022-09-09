@@ -10,6 +10,8 @@ library(gridExtra)
 tmean <- mean(getData('worldclim', var = "tmean", res = 2.5)) / 10
 
 #manual download of CMIP6 layers since automatic seems to be bugged in raster
+#2.5 minutes resolutiuon future climate projections 
+#https://www.worldclim.org/data/cmip6/cmip6_clim2.5m.html
 rast_name_list <-
   as.list(list.files("future_clim/", full.names = TRUE))
 rast_list <- stack(lapply(rast_name_list, raster))
@@ -25,8 +27,9 @@ mean_warming_vec <- NA
 #str(fut)
 
 #find experimental range of precips
-biomes <-
-  readr::read_csv("processed_data/forestcover_atsitelevel.csv")
+biomes <- read_csv("data/decomp_with_covar_branch.csv") %>%
+  distinct(country, site, lat, long)
+
 biomes$tmean <- raster::extract(tmean, cbind(biomes$long, biomes$lat))
 MAP <- sum(getData('worldclim', var = "prec", res = 2.5))
 #plot(MAP)
