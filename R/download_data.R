@@ -1,4 +1,4 @@
-#download the data from repo place it in data folder
+#download the data from repo place it in data folder 
 
 if(!file.exists("data/global_termite_microbe_wd.xlsx")) {
   download.file("https://figshare.com/ndownloader/files/35496569",
